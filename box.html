@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spillway Calculator</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    body {
+      padding-top: 0;
+      margin: 0;
+      overflow-x: hidden;
+    }
+    .container-fluid, .row, .col-auto, .col-md-3, .col-xl-2, .px-sm-2, .bg-dark {
+      height: 100%;
+    }
+    .spillway-container {
+      border-radius: 20px;
+      padding: 25px;
+      border: 2px solid black;
+      box-shadow: 0 0 15px 15px rgba(6, 84, 166, 0.3);
+      height: 100%;
+    }
+    .form-input {
+      width: 100%;
+    }
+    .form-button {
+      width: 100%;
+    }
+    .result-container {
+      display: none;
+      border-radius: 20px;
+      border: 2px solid black;
+      box-shadow: 0 0 15px 15px rgba(255, 0, 0, 0.3);
+      padding: 14px;
+      height: 100%;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container-fluid">
+  <div class="row">
+    <!-- Side Navbar -->
+    <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
+      <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+        <a href="home.html" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none mt-4">
+          <i class="fas fa-home me-2"></i><span class="fs-5 d-none d-sm-inline">Home</span>
+        </a>
+        <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+          <li>
+            <li class="w-100 mt-5">
+              <a href="Chute.html" class="nav-link px-0"> <span class="d-none d-sm-inline">Chute Spillway</span></a>
+            </li>
+            <li class="mt-4">
+              <a href="straight.html" class="nav-link px-0"> <span class="d-none d-sm-inline">Straight Drop Spillway</span></a>
+            </li>
+            <li class="mt-4">
+              <a href="box.html" class="nav-link px-0"> <span class="d-none d-sm-inline">Box Inlet Spillway</span></a>
+            </li>
+            <li class="mt-4">
+              <a href="pipe.html" class="nav-link px-0"> <span class="d-none d-sm-inline">Pipe Spillway</span></a>
+            </li>
+        </ul>
+        <hr>
+      </div>
+    </div>
+    <!-- Main Content -->
+    <div class="col-md-9 col-xl-10">
+      <div class="container mt-4">
+        <div class="row">
+          <div class="col-md-5 mt-5">
+            <div class="spillway-container">
+              <h1 style="text-align: center; color: green; font-weight: bold;">Box Inlet Spillway Calculator</h1>
+              <form id="boxspillwayForm">
+                <div class="form-group mt-3">
+                  <label for="Qg" class="form-label">Runoff collected from catchment area (m<sup>3</sup>/s):</label>
+                  <input type="number" id="BQg" name="BQg" step="any" class="form-control form-input">
+                </div>
+                <div class="form-group mt-3">
+                  <label for="B" class="form-label">B (m):</label>
+                  <input type="number" id="BB" name="BB" step="any" class="form-control form-input">
+                </div>
+                <div class="form-group mt-3">
+                  <label for="W" class="form-label">Width at the upstream end:</label>
+                  <input type="number" id="BW" name="BW" step="any" class="form-control form-input">
+                </div>
+                <div class="form-group mt-3">
+                  <label for="We" class="form-label">Width at the end sill:</label>
+                  <input type="number" id="BWe" name="BWe" step="any" class="form-control form-input">
+                </div>
+                <div class="center-content mt-3 d-flex justify-content-center">
+                  <button type="button" class="btn btn-primary form-button" onclick="calculateBoxSpillway()">Calculate</button>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="col-md-5 mt-5" style="padding-left: 50px;">
+            <div class="container result-container" id="resultContainer">
+              <div class="row">
+                <div class="col">
+                  <div id="boxresult">
+                    <h2 style="color: rgb(91, 31, 107); font-weight: bold; text-decoration: underline;">Result</h2>
+                    <p>Critical depth at straight section: <span id="BDc"></span></p>
+                    <p>Critical depth at end sill: <span id="BDce"></span></p>
+                    <p>Length of straight section: <span id="BLs"></span></p>
+                    <p>Length of basin section: <span id="BLb"></span></p>
+                    <p>Tail Water Depth: <span id="Bd2"></span></p>
+                    <p>Height of end sill and longitudinal sill: <span id="BF"></span></p>
+                    <p>Number of longitudinal Sills: <span id="BnumSills"></span></p>
+                    <p>Spacing between longitudinal sills: <span id="BP"></span></p>
+                    <p>Height of side wall above tail water Depth: <span id="Bt"></span></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function calculateBoxSpillway() {
+    let Qg = parseFloat(document.getElementById("BQg").value);
+    let B = parseFloat(document.getElementById("BB").value);
+    let W = parseFloat(document.getElementById("BW").value);
+    let We = parseFloat(document.getElementById("BWe").value);
+
+    const g = 9.81;
+    // critical depth at straight section
+    let x1 = Qg / W;
+    let x2 = Math.pow(x1, 2);
+    let x3 = x2 / g;
+    let Dc = Math.sqrt(x3);
+    let DcUnits = "m";
+
+    // critical depth at end sill
+    let y1 = Qg / We;
+    let y2 = Math.pow(y1, 2);
+    let y3 = y2 / g;
+    let Dce = Math.sqrt(y3);
+    let DceUnits = "m";
+
+    // Length of straight section
+    let Ls = ((0.2 / (B / W)) + 1) * Dc;
+    let LsUnits = "m";
+
+    // Length of basin section
+    let Lb = ((W + 2 * B) / (2 * B / W));
+    let LbUnits = "m";
+
+    // Tail water depth
+    let D2;
+    if (Lb > 11.5 * Dce) {
+      D2 = (Dce + (0.052 * We));
+    } else {
+      D2 = 1.6 * Dce;
+    }
+    let D2Units = "m";
+
+    // Height of end sill and longitudinal sill
+    let F = D2 / 6;
+    let FUnits = "m";
+
+    // Number of longitudinal sills
+    let N = We < 2.5 * W ? 2 : 4;
+
+    // Space between longitudinal sills
+    let P1 = W / 6;
+    let P2 = W / 4;
+    let PUnits = "m";
+
+    // Height of side wall above tail water Depth
+    // Height of side wall above tail water Depth
+    let t = D2 / 3;
+    let tUnits = "m";
+
+    document.getElementById("BDc").innerText = Dc.toFixed(2) + " " + DcUnits;
+    document.getElementById("BDce").innerText = Dce.toFixed(2) + " " + DceUnits;
+    document.getElementById("BLs").innerText = Ls.toFixed(2) + " " + LsUnits;
+    document.getElementById("BLb").innerText = Lb.toFixed(2) + " " + LbUnits;
+    document.getElementById("Bd2").innerText = D2.toFixed(2) + " " + D2Units;
+    document.getElementById("BF").innerText = F.toFixed(2) + " " + FUnits;
+    document.getElementById("BnumSills").innerText = N;
+    document.getElementById("BP").innerText = P1.toFixed(2) + " to " + P2.toFixed(2) + " " + PUnits;
+    document.getElementById("Bt").innerText = t.toFixed(2) + " " + tUnits;
+
+    // Show the result container
+    document.getElementById("resultContainer").style.display = "block";
+  };
+</script>
+
+</body>
+</html>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spillway Calculator</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    body {
+      padding-top: 0;
+      margin: 0;
+      overflow-x: hidden;
+    }
+    .container-fluid, .row, .col-auto, .col-md-3, .col-xl-2, .px-sm-2, .bg-dark {
+      height: 100%;
+    }
+    .spillway-container, .result-container {
+      border-radius: 20px;
+      border: 2px solid black;
+      padding: 25px;
+      box-shadow: 0 0 15px 15px rgba(6, 84, 166, 0.3);
+      height: calc(100% - 20px);
+    }
+    .form-input {
+      width: 100%;
+    }
+    .form-button {
+      width: 100%;
+    }
+    .result-container {
+      display: none;
+      box-shadow: 0 0 15px 15px rgba(255, 0, 0, 0.3);
+    }
+  </style>
+</head>
+<body>
+
+<div class="container-fluid">
+  <div class="row">
+    <!-- Side Navbar -->
+    <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
+      <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+        <a href="home.html" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none mt-4">
+          <i class="fas fa-home me-2"></i><span class="fs-5 d-none d-sm-inline">Home</span>
+        </a>
+        <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+          <li>
+            <li class="w-100 mt-5">
+              <a href="Chute.html" class="nav-link px-0"> <span class="d-none d-sm-inline">Chute Spillway</span></a>
+            </li>
+            <li class="mt-4">
+              <a href="straight.html" class="nav-link px-0"> <span class="d-none d-sm-inline">Straight Drop Spillway</span></a>
+            </li>
+            <li class="mt-4">
+              <a href="box.html" class="nav-link px-0"> <span class="d-none d-sm-inline">Box Inlet Spillway</span></a>
+            </li>
+            <li class="mt-4">
+              <a href="pipe.html" class="nav-link px-0"> <span class="d-none d-sm-inline">Pipe Spillway</span></a>
+            </li>
+          </li>
+        </ul>
+        <hr>
+      </div>
+    </div>
+    <!-- Main Content -->
+    <div class="col-md-9 col-xl-10">
+      <div class="container mt-4">
+        <div class="row">
+          <div class="col-md-6 mt-5">
+            <div class="spillway-container">
+              <h1 class="text-center mb-5" style="color: green; font-weight: bold;">Pipe Spillway Calculator</h1>
+              <form id="pipespillwayForm">
+                <div class="row mb-2">
+                    <div class="col-md-6">
+                      <div class="form-group position-relative">
+                        <label for="c" class="form-label">Coefficient of runoff:</label>
+                      <input type="number" id="Pc" name="Pc" step="any" class="form-control form-input" required>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group position-relative">
+                        <label for="i" class="form-label">Rainfall intensity (cm/hr):</label>
+                      <input type="number" id="Pi" name="Pi" step="any" class="form-control form-input" required>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mb-2">
+                    <div class="col-md-6">
+                      <div class="form-group position-relative">
+                        <label for="A" class="form-label">Catchment area (hectares):</label>
+                      <input type="number" id="PA" name="PA" step="any" class="form-control form-input" required>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group position-relative">
+                        <label for="h" class="form-label">Drop (m):</label>
+                      <input type="number" id="Ph" name="Ph" step="any" class="form-control form-input" required>
+                      </div>
+                    </div>
+                  </div>
+                <div class="row mb-2">
+                    <div class="col-md-6">
+                      <div class="form-group position-relative">
+                        <label for="Ke" class="form-label">Entrance loss coefficient (Ke):</label>
+                      <input type="number" id="PKe" name="PKe" step="any" class="form-control form-input" required>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group position-relative">
+                        <label for="Kc" class="form-label">Friction loss coefficient (Kc):</label>
+                      <input type="number" id="PKc" name="PKc" step="any" class="form-control form-input" required>
+                      </div>
+                    </div>
+                  </div> 
+                  <div class="row mb-2">
+                    <div class="col-md-12">
+                      <div class="form-group position-relative">
+                        <label for="l" class="form-label">Length (m):</label>
+                      <input type="number" id="Pl" name="Pl" step="any" class="form-control form-input" required>
+                      </div>
+                    </div>
+                  </div> 
+                  <div class="center-content mt-4 mb-4 d-flex justify-content-center">
+                      <button type="button" class="btn btn-primary form-button" onclick="calculatePipeSpillway(event)">Calculate</button>
+                  </div>
+              </form>
+            </div>
+          </div>
+          <div class="col-md-6 mt-5" style="padding-left: 50px;">
+            <div class="result-container" id="resultContainer">
+              <div id="piperesult">
+                <h2 style="color: rgb(91, 31, 107); font-weight: bold; text-decoration: underline;">Result</h2>
+                <p style="padding-top: 30px;">Peak discharge (m3/s): <span id="PQ"></span></p>
+                <p>Diameter of pipe (m): <span id="Pd"></span></p>
+                <p>Velocity of flow (m/s): <span id="PV"></span></p>
+                <p>Natural slope (Sn): <span id="PSn"></span></p>
+                <p>Conduit slope (S): <span id="PS"></span></p>
+                <p>Flow condition: <span id="PflowCondition"></span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function calculatePipeSpillway(event) {
+
+      // Constants
+      const g = 9.81;
+      const Pi = 3.14;
+
+      event.preventDefault(); // Prevent form submission
+
+      // Gather inputs from form fields
+      var c = parseFloat(document.getElementById("Pc").value);
+      var i = parseFloat(document.getElementById("Pi").value);
+      var A = parseFloat(document.getElementById("PA").value);
+      var h = parseFloat(document.getElementById("Ph").value);
+      var Ke = parseFloat(document.getElementById("PKe").value);
+      var Kc = parseFloat(document.getElementById("PKc").value);
+      var l = parseFloat(document.getElementById("Pl").value);
+
+      // Calculate peak discharge (Qp) and 50% of peak flow (Q)
+      var Qp = (c * i * A) / 36;
+      var Q = 0.5 * Qp;
+
+      // Calculate diameter of pipe (d)
+      var X1 = 2 * g * h;
+      var X2 = Math.sqrt(X1);
+      var X3 = 1 + Ke + Kc * l;
+      var X4 = Math.sqrt(X3);
+      var X5 = Q * X4 * 4 / (Pi * X2);
+      var d = Math.sqrt(X5);
+
+      // Calculate velocity of flow (V)
+      var V = Q * 4 / (Pi * d * d);
+
+      // Calculate natural slope (Sn)
+      var X6 = Kc * V * V / (2 * g);
+      var X7 = 1 - (X6 * X6);
+      var Sn = X6 / Math.sqrt(X7);
+
+      // Calculate conduit slope (S)
+      var dH = 0.3;
+      var S = dH / l;
+
+      // Determine flow condition
+      var flowCondition = (S < Sn) ? "Full flow condition" : "Partial flow condition";
+
+      // Display results in HTML
+      document.getElementById("PQ").innerText = Q.toFixed(2);
+      document.getElementById("Pd").innerText = d.toFixed(2);
+      document.getElementById("PV").innerText = V.toFixed(2);
+      document.getElementById("PSn").innerText = Sn.toFixed(2);
+      document.getElementById("PS").innerText = S.toFixed(2);
+      document.getElementById("PflowCondition").innerText = flowCondition;
+
+      // Show results
+      document.getElementById("resultContainer").style.display = "block";
+  }
+</script>
+
+</body>
+</html>
