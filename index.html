@@ -19,6 +19,31 @@
         height: 150px;
         margin-top: 10px;
       }
+      body {
+          background-color: rgb(63, 63, 63);
+          font-family: Arial, sans-serif;
+          color: white;
+      }
+      .container-fluid {
+          padding-top: 20px;
+      }
+      .nav-link {
+          color: white !important;
+      }
+      .nav-link:hover {
+          color: #ffc107 !important;
+      }
+      .container-md {
+          border-radius: 20px;
+          box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+          transition: transform 0.3s ease;
+      }
+      .container-md:hover {
+          transform: scale(1.05);
+      }
+      .card-body {
+          padding-top: 20px;
+      }
     </style>
   </head>
   <body style="background-color: rgb(63, 63, 63);">
@@ -48,13 +73,14 @@
           </div>
         </div>
         <div class="col-md-9 px-0">
-          <div class="row" style="padding-left: 20px; padding-right: 20px;">
+          <div class="row" style="padding-left: 100px;">
             <div class="col-md-12">
-              <div class="container-md p-3 my-3 text-center">
-                <h1 style="font-weight: bold; font-family: times new roman; font-size: 30px; color: rgb(255, 255, 255);">Development of ICT Tool for Soil and Water Conservation</h1>
-              </div>
+                <!-- First medium-sized container -->
+                <div class="container-md p-3 my-3 text-center">
+                    <h1 style="font-weight: bold; font-family: times new roman; font-size: 50px;">Development of ICT Tool for Soil and Water Conservation</h1>
+                </div>
             </div>
-          </div>
+          </div>
           <div class="container mt-4">
             <div class="row" style="padding-left: 20px; padding-right: 20px;">
               <div class="col-md-6">
@@ -109,7 +135,7 @@
                 </div>
                 <div class="col-md-2">
                   <div class="image-container">
-                    <img src="./coding\html5.png" alt="HTML" class="author-image">
+                    <img src="./html5.png" alt="HTML" class="author-image">
                     <div class="image-name" style="color: #CCFFFF; font-weight: bold;">HTML 5</div>
                   </div>
                 </div>
