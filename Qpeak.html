@@ -31,7 +31,7 @@
     .result-container {
       display: none;
       border-radius: 20px;
-      border: 2px solid black;
+      border: 2px solid rgb(0, 0, 0);
       box-shadow: 0 0 15px 15px rgba(255, 0, 0, 0.3);
       padding: 14px;
       height: 100%;
@@ -62,6 +62,9 @@
             <li class="mt-4">
               <a href="pipe.html" class="nav-link px-0"> <span class="d-none d-sm-inline">Pipe Spillway</span></a>
             </li>
+            <li class="mt-4">
+              <a href="Qpeak.html" class="nav-link px-0"> <span class="d-none d-sm-inline">Qpeak Spillway</span></a>
+            </li>
         </ul>
         <hr>
       </div>
@@ -72,8 +75,8 @@
         <div class="row">
           <div class="col-md-5 mt-4">
             <div class="spillway-container">
-              <h1 class="text-center mb-4" style="color: green; font-weight: bold;">Chute Spillway Calculator</h1>
-              <form id="chuteSpillwayForm">
+              <h1 class="text-center mb-4" style="color: green; font-weight: bold;">Qpeak Calculator</h1>
+              <form id="QpeakSpillwayForm">
                 <div class="mb-3">
                   <label for="c" class="form-label">Coefficient of Runoff:</label>
                   <input type="number" id="c" step="0.01" required class="form-control form-input">
@@ -86,15 +89,7 @@
                   <label for="A" class="form-label">Catchment Area (hectares):</label>
                   <input type="number" id="A" step="0.01" required class="form-control form-input">
                 </div>
-                <div class="mb-3">
-                  <label for="H" class="form-label">Depth over the flow over weir (meter):</label>
-                  <input type="number" id="H" step="0.01" required class="form-control form-input">
-                </div>
-                <div class="mb-3">
-                  <label for="h" class="form-label">Value of drop (meter):</label>
-                  <input type="number" id="h" step="0.01" required class="form-control form-input">
-                </div>
-                <button type="button" class="btn btn-primary form-button" onclick="calculateChuteSpillway()">Calculate</button>
+                <button type="button" class="btn btn-primary form-button" onclick="calculateQpeakSpillway()">Calculate</button>
               </form>
             </div>
           </div>
@@ -102,83 +97,26 @@
             <div class="container result-container" id="resultContainer">
               <div class="row">
                 <div class="col">
-                  <div id="chuteresult">
-                    <h2 style="color: rgb(91, 31, 107); font-weight: bold; text-decoration: underline;">Result</h2>
-                    <p>Peak Discharge Qpeak (m<sup>3</sup>/s): <span id="Qp"></span></p>
-                    <p>Length of Weir L (meters): <span id="L"></span></p>
-                    <p>Initial depth d1 (meters): <span id="d1"></span></p>
-                    <p>Froude Number Fr : <span id="Fr1"></span></p>
-                    <p>Sequent Depth d2 (meters): <span id="d2"></span></p>
-                    <p>Height of Chute/Floor Block (meters): <span id="X1"></span></p>
-                    <p>Width and Spacing Between Chute/Floor Block (meters): <span id="X2"></span></p>
-                    <p>Basin Length (meters): <span id="Lb"></span></p>
-                    <p>Spacing of Floor Block from Upstream of Stilling Basin (meters): <span id="X3"></span></p>
-                    <p>Minimum Distance of Floor Block from Side Wall (meters): <span id="X4"></span></p>
-                    <p>Height of End Sill (meters): <span id="X5"></span></p>
-                    <p>Actual Tail Water Depth (meters): <span id="X13"></span></p>
-                    <p>Height of Side Wall and Wing Wall at Junction (meters): <span id="J"></span></p>
-                    <p>Freeboard (meters): <span id="FB"></span></p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+                  <div id="Qpeakresult">
+                    <h2 style="color: rgb(31, 34, 107); font-weight: bold; text-decoration: underline;">Result</h2>
+                    <p>Peak Discharge Qpeak (m<sup>3</sup>/s): <span id="Qp"></span></p>    
     </div>
   </div>
 </div>
 
 <script>
-  function calculateChuteSpillway() {
+  function calculateQpeakSpillway() {
     var c = parseFloat(document.getElementById("c").value);
     var i = parseFloat(document.getElementById("i").value);
     var A = parseFloat(document.getElementById("A").value);
-    var H = parseFloat(document.getElementById("H").value);
-    var h = parseFloat(document.getElementById("h").value);
-
+   
     var g = 9.81;
     var Qp = (c * i * A) / 36;
-    var Pi = 3.14;
-    var X1 = Math.pow(H, 1.5);
-    var L = Qp / (1.77 * X1);
-    var Hf = h - (0.1 * h);
-    var X2 = 2 * g * Hf;
-    var V = Math.sqrt(X2);
-    var d1 = Qp / (L * V);
-    var X3 = g * d1;
-    var X4 = Math.sqrt(X3);
-    var Fr1 = V / X4;
-    var X5 = 1 + (8 * Fr1 * Fr1);
-    var X6 = Math.sqrt(X5);
-    var X7 = X6 - 1;
-    var d2 = X7 * d1 / 2;
-    var X8 = 0.75 * d1;
-    var X9 = Math.pow(Fr1, 0.38);
-    var Lb = 4.5 * d2 / X9;
-    var X10 = Lb / 3;
-    var X11 = 3 * d1 / 8;
-    var X12 = 0.07 * d2;
-    var X13 = Math.pow(Fr1, 0.45);
-    var D2 = 1.4 * X13 * d1;
-    var J = (d2 / 3) + D2;
-    var FB = d2 / 3;
+  
 
     document.getElementById("resultContainer").style.display = "block";
     document.getElementById("Qp").textContent = Qp.toFixed(2);
-    document.getElementById("L").textContent = L.toFixed(2);
-    document.getElementById("d1").textContent = d1.toFixed(2);
-    document.getElementById("Fr1").textContent = Fr1.toFixed(2);
-    document.getElementById("d2").textContent = d2.toFixed(2);
-    document.getElementById("X1").textContent = d1.toFixed(2);
-    document.getElementById("X2").textContent = X8.toFixed(2);
-    document.getElementById("Lb").textContent = Lb.toFixed(2);
-    document.getElementById("X3").textContent = X10.toFixed(2);
-    document.getElementById("X4").textContent = X11.toFixed(2);
-    document.getElementById("X5").textContent = X12.toFixed(2);
-    document.getElementById("X13").textContent = D2.toFixed(2);
-    document.getElementById("J").textContent = J.toFixed(2);
-    document.getElementById("FB").textContent = FB.toFixed(2);
+
   }
 </script>
 
